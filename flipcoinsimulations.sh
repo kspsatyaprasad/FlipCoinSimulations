@@ -1,26 +1,31 @@
 #!/bin/bash
-read -p "Enter no of times to flip a coin: " no_of_flips
-no_of_heads=0
-no_of_tails=0
-for(( i = 1; i <= no_of_flips; i++ ))
+count_to_be_reached=21
+
+while(( 1 ))
 do
+    (( flips_count++ ))
+    echo -n "Flip-$flips_count is "
     coin_flip_result=$(( RANDOM % 2 ))
     if(( coin_flip_result == 0 ))
     then
-        echo "Flip-$i Heads"
+        echo "Heads"
         (( no_of_heads++ ))
     else
-        echo "Flip-$i Tails"
+        echo "Tails"
         (( no_of_tails++ ))
+    fi
+    if(( no_of_heads == count_to_be_reached || no_of_tails == count_to_be_reached ))
+    then
+        break
     fi 
 done
-echo "The no of Heads are is $no_of_heads and no of Tails are is $no_of_tails"
+echo "The no of Heads  are  $no_of_heads and no of Tails are $no_of_tails"
 if(( no_of_heads > no_of_tails ))
 then
-echo "Heads Won"
+    echo "Heads won by $(( no_of_heads - no_of_tails ))"
 elif(( no_of_tails > no_of_heads ))
 then
-    echo "Tails Won"
+    echo "Tails won by $(( no_of_tails - no_of_heads ))"
 else    
     echo "game is a tie"
 fi
