@@ -1,6 +1,9 @@
 #!/bin/bash
+no_of_heads=0
+no_of_tails=0
+flips_count=0
 count_to_be_reached=21
-
+minimum_difference=2
 while(( 1 ))
 do
     (( flips_count++ ))
@@ -14,18 +17,16 @@ do
         echo "Tails"
         (( no_of_tails++ ))
     fi
-    if(( no_of_heads == count_to_be_reached || no_of_tails == count_to_be_reached ))
+	
+    diff_bt_hc_tc=$(( no_of_heads - no_of_tails ))
+    if(( no_of_heads == count_to_be_reached && diff_bt_hc_tc >= minimum_difference ))
     then
+        echo "Heads won by $diff_bt_hc_tc points"
         break
-    fi 
+		 elif(( no_of_tails == count_to_be_reached && ${diff_bt_hc_tc#-} >= minimum_difference ))
+    then
+         echo "Tails won by ${diff_bt_hc_tc#-} points"
+         break
+    fi
 done
-echo "The no of Heads  are  $no_of_heads and no of Tails are $no_of_tails"
-if(( no_of_heads > no_of_tails ))
-then
-    echo "Heads won by $(( no_of_heads - no_of_tails ))"
-elif(( no_of_tails > no_of_heads ))
-then
-    echo "Tails won by $(( no_of_tails - no_of_heads ))"
-else    
-    echo "game is a tie"
-fi
+echo "The Heads count is $no_of_heads and Tails Count is $no_of_tails"
